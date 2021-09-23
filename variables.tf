@@ -70,13 +70,11 @@ variable "jump" {
 variable "ansible" {
   type = map
   default = {
+    version = "2.10.7"
     aviPbAbsentUrl = "https://github.com/tacobayle/ansiblePbAviAbsent"
     aviPbAbsentTag = "v1.54"
     aviConfigureUrl = "https://github.com/tacobayle/aviConfigure"
     aviConfigureTag = "v5.87"
-    version = "2.10.7"
-    opencartInstallUrl = "https://github.com/tacobayle/ansibleOpencartInstall"
-    opencartInstallTag = "v1.21"
     k8sInstallUrl = "https://github.com/tacobayle/ansibleK8sInstall"
     k8sInstallTag = "v1.56"
   }
