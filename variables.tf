@@ -73,7 +73,7 @@ variable "ansible" {
     aviPbAbsentUrl = "https://github.com/tacobayle/ansiblePbAviAbsent"
     aviPbAbsentTag = "v1.54"
     aviConfigureUrl = "https://github.com/tacobayle/aviConfigure"
-    aviConfigureTag = "v5.86"
+    aviConfigureTag = "v5.87"
     version = "2.10.7"
     opencartInstallUrl = "https://github.com/tacobayle/ansibleOpencartInstall"
     opencartInstallTag = "v1.21"
@@ -124,7 +124,7 @@ variable "vmw" {
     }
     kubernetes = {
       workers = {
-        count = 3
+        count = 2
       }
       ako = {
         deploy = false

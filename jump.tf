@@ -48,7 +48,7 @@ resource "vsphere_virtual_machine" "jump" {
   clone {
     template_uuid = data.vsphere_virtual_machine.jump.id
   }
-  
+
   vapp {
     properties = {
      hostname    = "jump"
