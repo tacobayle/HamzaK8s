@@ -156,7 +156,7 @@ variable "vmw" {
             name = "seg-cluster1"
             ha_mode = "HA_MODE_SHARED"
             min_scaleout_per_vs = "2"
-            vcenter_folder = Hamza_K8S"
+            vcenter_folder = "Hamza_K8S"
           }
           networks = {
             pod = "192.168.0.0/16"
