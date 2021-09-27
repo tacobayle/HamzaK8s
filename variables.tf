@@ -40,7 +40,7 @@ variable "controller" {
     wait_for_guest_net_timeout = 4
     private_key_path = "~/.ssh/cloudKey"
     environment = "VMWARE"
-    dns =  ["10.23.108.1", "10.23.108.2"]
+    dns =  ["10.206.8.130", "10.206.8.131"]
     ntp = ["95.81.173.155", "188.165.236.162"]
     from_email = "avicontroller@avidemo.fr"
     se_in_provider_context = "true" # true is required for LSC Cloud
