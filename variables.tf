@@ -82,7 +82,7 @@ variable "ansible" {
 
 variable "vmw" {
   default = {
-    name = "cloudVmw"
+    name = "dc1_vcenter"
     datacenter = "wdc-06-vc12"
     dhcp_enabled = "true"
     domains = [
