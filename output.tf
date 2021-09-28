@@ -16,6 +16,11 @@ output "controllers" {
   value = vsphere_virtual_machine.controller.*.default_ip_address
 }
 
+output "avi_password" {
+  value = var.avi_password
+  description = "avi_password"
+}
+
 output "destroy" {
   value = "ssh -o StrictHostKeyChecking=no -i ~/.ssh/${basename(var.jump.private_key_path)} -t ubuntu@${vsphere_virtual_machine.jump.default_ip_address} 'git clone ${var.ansible.aviPbAbsentUrl} --branch ${var.ansible.aviPbAbsentTag} ; cd ${split("/", var.ansible.aviPbAbsentUrl)[4]} ; ansible-playbook local.yml --extra-vars @${var.controller.aviCredsJsonFile}' ; sleep 5 ; terraform destroy -auto-approve"
   description = "command to destroy the infra"
