@@ -82,7 +82,7 @@ variable "ansible" {
 
 variable "vmw" {
   default = {
-    name = "dc1_vcenter"
+    name = "dc1_vCenter"
     datacenter = "wdc-06-vc12"
     dhcp_enabled = "true"
     domains = [
@@ -107,8 +107,6 @@ variable "vmw" {
       dhcp_enabled = "no"
     }
     virtualservices = {
-      http = [
-      ]
       dns = [
         {
           name = "app-dns"

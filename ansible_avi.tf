@@ -14,7 +14,8 @@ resource "null_resource" "ansible_hosts_avi_controllers" {
 
 
 resource "null_resource" "ansible_avi" {
-  depends_on = [vsphere_virtual_machine.jump, vsphere_virtual_machine.master, vsphere_virtual_machine.worker, null_resource.ansible_hosts_avi_header_1, null_resource.ansible_bootstrap_cluster]
+//  depends_on = [vsphere_virtual_machine.jump, vsphere_virtual_machine.master, vsphere_virtual_machine.worker, null_resource.ansible_hosts_avi_header_1, null_resource.ansible_bootstrap_cluster]
+  depends_on = [vsphere_virtual_machine.jump, null_resource.ansible_hosts_avi_header_1]
   connection {
     host = vsphere_virtual_machine.jump.default_ip_address
     type = "ssh"
@@ -31,7 +32,9 @@ resource "null_resource" "ansible_avi" {
 
   provisioner "remote-exec" {
     inline = [
-      "git clone ${var.ansible.aviConfigureUrl} --branch ${var.ansible.aviConfigureTag} ; cd ${split("/", var.ansible.aviConfigureUrl)[4]} ; ansible-playbook -i ../hosts_avi local.yml --extra-vars '{\"vmw\": ${jsonencode(var.vmw)}, \"avi_vsphere_password\": ${jsonencode(var.avi_vsphere_password)}, \"avi_vsphere_server\": ${jsonencode(var.avi_vsphere_server)}, \"avi_vsphere_user\": ${jsonencode(var.avi_vsphere_user)}, \"avi_username\": ${jsonencode(var.avi_username)}, \"avi_password\": ${jsonencode(var.avi_password)}, \"avi_version\": ${split("-", var.controller.version)[0]}, \"controllerPrivateIps\": ${jsonencode(vsphere_virtual_machine.controller.*.default_ip_address)}, \"controller\": ${jsonencode(var.controller)}}'",
+      "git clone ${var.ansible.aviConfigureUrl} --branch ${var.ansible.aviConfigureTag}",
+      "cd ${split("/", var.ansible.aviConfigureUrl)[4]}",
+      "ansible-playbook -i ../hosts_avi local.yml --extra-vars '{\"vmw\": ${jsonencode(var.vmw)}, \"avi_vsphere_password\": ${jsonencode(var.avi_vsphere_password)}, \"avi_vsphere_server\": ${jsonencode(var.avi_vsphere_server)}, \"avi_vsphere_user\": ${jsonencode(var.avi_vsphere_user)}, \"avi_username\": ${jsonencode(var.avi_username)}, \"avi_password\": ${jsonencode(var.avi_password)}, \"avi_version\": ${split("-", var.controller.version)[0]}, \"controllerPrivateIps\": ${jsonencode(vsphere_virtual_machine.controller.*.default_ip_address)}, \"controller\": ${jsonencode(var.controller)}}'"
     ]
   }
 }
