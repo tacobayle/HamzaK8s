@@ -129,7 +129,7 @@ resource "null_resource" "update_ip_to_jump" {
       "echo \"                macaddress: $macLast\" | sudo tee -a ${var.jump.netplan_file_path}",
       "echo \"            set-name: $ifaceLastName\" | sudo tee -a ${var.jump.netplan_file_path}",
       "echo \"            nameservers:\" | sudo tee -a ${var.jump.netplan_file_path}",
-      "echo \"              addresses: [${cidrhost(var.vmw.network_vip.cidr, 1)}]\" | sudo tee -a ${var.jump.netplan_file_path}",
+      "echo \"              addresses: [${cidrhost(var.vmw.network_vip.cidr, var.vmw.network_vip.ipStartPool)}]\" | sudo tee -a ${var.jump.netplan_file_path}",
       "echo \"    version: 2\" | sudo tee -a ${var.jump.netplan_file_path}",
       "sudo netplan apply"
     ]

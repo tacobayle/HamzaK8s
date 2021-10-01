@@ -17,6 +17,13 @@ data "template_file" "values" {
   }
 }
 
+data "template_file" "ingress" {
+  template = file("template/ingress.yml.template")
+  vars = {
+    domain = var.vmw.domains[0].name
+  }
+}
+
 resource "null_resource" "ako_prerequisites" {
   count = length(var.vmw.kubernetes.clusters)
   connection {
@@ -34,6 +41,30 @@ resource "null_resource" "ako_prerequisites" {
   provisioner "file" {
     source = "values-cluster-${count.index}"
     destination = "values.yml"
+  }
+
+  provisioner "file" {
+    source = "template/deployment.yml"
+    destination = "deployment.yml"
+  }
+
+  provisioner "file" {
+    source = "template/service_clusterIP.yml"
+    destination = "service_clusterIP.yml"
+  }
+
+  provisioner "file" {
+    source = "template/service_loadBalancer.yml"
+    destination = "service_loadBalancer.yml"
+  }
+
+  provisioner "local-exec" {
+    command = "cat > ingress.yml <<EOL\n${data.template_file.ingress.rendered}\nEOL"
+  }
+
+  provisioner "file" {
+    source = "ingress.yml"
+    destination = "ingress.yml"
   }
 
   provisioner "remote-exec" {
