@@ -54,7 +54,7 @@ variable "controller" {
 variable "jump" {
   type = map
   default = {
-    name = "jump"
+    name = "jump-hamza"
     cpu = 2
     memory = 4096
     disk = 20
