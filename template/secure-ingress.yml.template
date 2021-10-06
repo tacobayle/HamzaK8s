@@ -6,7 +6,7 @@ spec:
   tls:
   - hosts:
      - secure-ingress.vmw.${domain}
-    secretName: sslcert01
+    secretName: cert01
   rules:
     - host: secure-ingress.vmw.${domain}
       http:
