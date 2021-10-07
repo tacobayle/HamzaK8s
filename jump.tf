@@ -138,7 +138,7 @@ resource "null_resource" "update_ip_to_jump" {
   provisioner "remote-exec" {
     inline = [
       "ifaceLastName=`ip -o link show | awk -F': ' '{print $2}' | tail -1`",
-      "ip addr add ${var.jump.ip_vip}/${split("/", var.vmw.network_vip.cidr)[1]} dev $ifaceLastName"
+      "sudo ip addr add ${var.jump.ip_vip}/${split("/", var.vmw.network_vip.cidr)[1]} dev $ifaceLastName"
     ]
   }
 
