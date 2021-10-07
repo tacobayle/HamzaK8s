@@ -108,6 +108,7 @@ variable "vmw" {
       vcenter_dvs = "true"
       dhcp_enabled = "no"
     }
+    default_waf_policy = "System-WAF-Policy"
     virtualservices = {
       dns = [
         {

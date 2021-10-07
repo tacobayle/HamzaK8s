@@ -24,6 +24,21 @@ data "template_file" "ingress" {
   }
 }
 
+data "template_file" "secure_ingress" {
+  template = file("template/secure-ingress.yml.template")
+  vars = {
+    domain = var.vmw.domains[0].name
+  }
+}
+
+data "template_file" "avi_crd_hostrule" {
+  template = file("template/avi_crd_hostrule.yml.template")
+  vars = {
+    default_waf_policy = var.vmw.default_waf_policy
+    domain = var.vmw.domains[0].name
+  }
+}
+
 resource "null_resource" "ako_prerequisites" {
   count = length(var.vmw.kubernetes.clusters)
   connection {
@@ -65,6 +80,24 @@ resource "null_resource" "ako_prerequisites" {
   provisioner "file" {
     source = "ingress.yml"
     destination = "ingress.yml"
+  }
+
+  provisioner "local-exec" {
+    command = "cat > secure_ingress.yml <<EOL\n${data.template_file.secure_ingress.rendered}\nEOL"
+  }
+
+  provisioner "file" {
+    source = "secure_ingress.yml"
+    destination = "secure_ingress.yml"
+  }
+
+  provisioner "local-exec" {
+    command = "cat > avi_crd_hostrule.yml <<EOL\n${data.template_file.avi_crd_hostrule.rendered}\nEOL"
+  }
+
+  provisioner "file" {
+    source = "avi_crd_hostrule.yml"
+    destination = "avi_crd_hostrule.yml"
   }
 
   provisioner "remote-exec" {
