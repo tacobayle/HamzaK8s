@@ -74,7 +74,7 @@ variable "ansible" {
   default = {
     version = "2.10.7"
     aviPbAbsentUrl = "https://github.com/tacobayle/ansiblePbAviAbsent"
-    aviPbAbsentTag = "v1.54"
+    aviPbAbsentTag = "v1.57"
     aviConfigureUrl = "https://github.com/tacobayle/aviConfigure"
     aviConfigureTag = "v5.96"
     k8sInstallUrl = "https://github.com/tacobayle/ansibleK8sInstall"
@@ -109,6 +109,15 @@ variable "vmw" {
       dhcp_enabled = "no"
     }
     default_waf_policy = "System-WAF-Policy"
+    serviceEngineGroup = [
+      {
+        name = "Default-Group"
+        ha_mode = "HA_MODE_SHARED"
+        min_scaleout_per_vs = 2
+        buffer_se = 1
+        vcenter_folder = "Hamza_K8S"
+      },
+    ]
     virtualservices = {
       dns = [
         {

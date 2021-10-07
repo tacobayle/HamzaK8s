@@ -5,14 +5,14 @@ metadata:
 spec:
   tls:
   - hosts:
-     - secure-ingress.vmw.${domain}
+     - secure-ingress.${domain}
     secretName: cert01
   rules:
-    - host: secure-ingress.vmw.${domain}
+    - host: secure-ingress.${domain}
       http:
         paths:
           - pathType: Prefix
-            path: "/v1"
+            path: "/"
             backend:
               service:
                 name: web-front-1

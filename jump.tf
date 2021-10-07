@@ -111,35 +111,35 @@ resource "null_resource" "update_ip_to_jump" {
     private_key = file(var.jump["private_key_path"])
   }
 
-//  provisioner "remote-exec" {
-//    inline = [
-//      "ifaceFirstName=`ip -o link show | awk -F': ' '{print $2}' | head -2 | tail -1`",
-//      "macFirst=`ip -o link show | awk -F'link/ether ' '{print $2}' | awk -F' ' '{print $1}' | head -2 | tail -1`",
-//      "ifaceLastName=`ip -o link show | awk -F': ' '{print $2}' | tail -1`",
-//      "macLast=`ip -o link show | awk -F'link/ether ' '{print $2}' | awk -F' ' '{print $1}'| tail -1`",
-//      "sudo cp ${var.jump.netplan_file_path} ${var.jump.netplan_file_path}.old",
-//      "echo \"network:\" | sudo tee ${var.jump.netplan_file_path}",
-//      "echo \"    ethernets:\" | sudo tee -a ${var.jump.netplan_file_path}",
-//      "echo \"        $ifaceFirstName:\" | sudo tee -a ${var.jump.netplan_file_path}",
-//      "echo \"            dhcp4: true\" | sudo tee -a ${var.jump.netplan_file_path}",
-//      "echo \"        $ifaceLastName:\" | sudo tee -a ${var.jump.netplan_file_path}",
-//      "echo \"            dhcp4: false\" | sudo tee -a ${var.jump.netplan_file_path}",
-//      "echo \"            addresses: [${var.jump.ip_vip}/${split("/", var.vmw.network_vip.cidr)[1]}]\" | sudo tee -a ${var.jump.netplan_file_path}",
-//      "echo \"            match:\" | sudo tee -a ${var.jump.netplan_file_path}",
-//      "echo \"                macaddress: $macLast\" | sudo tee -a ${var.jump.netplan_file_path}",
-//      "echo \"            set-name: $ifaceLastName\" | sudo tee -a ${var.jump.netplan_file_path}",
-//      "echo \"            nameservers:\" | sudo tee -a ${var.jump.netplan_file_path}",
-//      "echo \"              addresses: [${cidrhost(var.vmw.network_vip.cidr, var.vmw.network_vip.ipStartPool)}]\" | sudo tee -a ${var.jump.netplan_file_path}",
-//      "echo \"    version: 2\" | sudo tee -a ${var.jump.netplan_file_path}",
-//      "sudo netplan apply"
-//    ]
-//  }
-
   provisioner "remote-exec" {
     inline = [
+      "ifaceFirstName=`ip -o link show | awk -F': ' '{print $2}' | head -2 | tail -1`",
+      "macFirst=`ip -o link show | awk -F'link/ether ' '{print $2}' | awk -F' ' '{print $1}' | head -2 | tail -1`",
       "ifaceLastName=`ip -o link show | awk -F': ' '{print $2}' | tail -1`",
-      "sudo ip addr add ${var.jump.ip_vip}/${split("/", var.vmw.network_vip.cidr)[1]} dev $ifaceLastName"
+      "macLast=`ip -o link show | awk -F'link/ether ' '{print $2}' | awk -F' ' '{print $1}'| tail -1`",
+      "sudo cp ${var.jump.netplan_file_path} ${var.jump.netplan_file_path}.old",
+      "echo \"network:\" | sudo tee ${var.jump.netplan_file_path}",
+      "echo \"    ethernets:\" | sudo tee -a ${var.jump.netplan_file_path}",
+      "echo \"        $ifaceFirstName:\" | sudo tee -a ${var.jump.netplan_file_path}",
+      "echo \"            dhcp4: true\" | sudo tee -a ${var.jump.netplan_file_path}",
+      "echo \"        $ifaceLastName:\" | sudo tee -a ${var.jump.netplan_file_path}",
+      "echo \"            dhcp4: false\" | sudo tee -a ${var.jump.netplan_file_path}",
+      "echo \"            addresses: [${var.jump.ip_vip}/${split("/", var.vmw.network_vip.cidr)[1]}]\" | sudo tee -a ${var.jump.netplan_file_path}",
+      "echo \"            match:\" | sudo tee -a ${var.jump.netplan_file_path}",
+      "echo \"                macaddress: $macLast\" | sudo tee -a ${var.jump.netplan_file_path}",
+      "echo \"            set-name: $ifaceLastName\" | sudo tee -a ${var.jump.netplan_file_path}",
+      "echo \"            nameservers:\" | sudo tee -a ${var.jump.netplan_file_path}",
+      "echo \"              addresses: [${cidrhost(var.vmw.network_vip.cidr, var.vmw.network_vip.ipStartPool)}]\" | sudo tee -a ${var.jump.netplan_file_path}",
+      "echo \"    version: 2\" | sudo tee -a ${var.jump.netplan_file_path}",
+      "sudo netplan apply"
     ]
   }
+
+//  provisioner "remote-exec" {
+//    inline = [
+//      "ifaceLastName=`ip -o link show | awk -F': ' '{print $2}' | tail -1`",
+//      "sudo ip addr add ${var.jump.ip_vip}/${split("/", var.vmw.network_vip.cidr)[1]} dev $ifaceLastName"
+//    ]
+//  }
 
 }
