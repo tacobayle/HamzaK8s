@@ -5,6 +5,6 @@ metadata:
   namespace: default
 spec:
   virtualhost:
-    fqdn: secure-ingress.vmw.${domain}
+    fqdn: secure-ingress.${domain}
     enableVirtualHost: true
     wafPolicy: ${default_waf_policy}
