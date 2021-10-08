@@ -162,6 +162,7 @@ variable "vmw" {
             }
           }
           arePodsReachable = "false" # defines in values.yml if dynamic route to reach the pods
+          shardVSSize = "SMALL"
           serviceEngineGroup = {
             name = "seg-cluster1"
             ha_mode = "HA_MODE_SHARED"
@@ -225,6 +226,7 @@ variable "vmw" {
             }
           }
           arePodsReachable = "false"
+          shardVSSize = "SMALL"
           serviceEngineGroup = {
             name = "seg-cluster2"
             ha_mode = "HA_MODE_SHARED"

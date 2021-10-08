@@ -10,6 +10,7 @@ data "template_file" "values" {
     subnetPrefix = split("/", var.vmw.network_vip.cidr)[1]
     networkName = var.vmw.network_vip.name
     serviceType = var.vmw.kubernetes.clusters[count.index].service.type
+    shardVSSize = var.vmw.kubernetes.clusters[count.index].shardVSSize
     serviceEngineGroupName = var.vmw.kubernetes.clusters[count.index].serviceEngineGroup.name
     controllerVersion = split("-", var.controller.version)[0]
     cloudName = var.vmw.name
