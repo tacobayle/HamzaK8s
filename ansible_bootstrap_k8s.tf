@@ -34,7 +34,7 @@ resource "null_resource" "ansible_bootstrap_cluster" {
   depends_on = [null_resource.ansible_hosts_cluster_static2, vsphere_virtual_machine.jump]
   count = length(var.vmw.kubernetes.clusters)
   connection {
-    host = split("/", var.jump.ip_mgmt)[0]
+    host = vsphere_virtual_machine.jump.default_ip_address
     type = "ssh"
     agent = false
     user = var.jump.username

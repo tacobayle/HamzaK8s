@@ -64,6 +64,22 @@ variable "jump" {
     template_name = "ubuntu-focal-20.04-cloudimg-template"
     avisdkVersion = "21.1.1"
     username = "ubuntu"
+  }
+}
+
+variable "client" {
+  type = map
+  default = {
+    name = "client-hamza"
+    cpu = 2
+    memory = 4096
+    disk = 20
+    public_key_path = "~/.ssh/cloudKey.pub"
+    private_key_path = "~/.ssh/cloudKey"
+    wait_for_guest_net_timeout = 2
+    template_name = "ubuntu-focal-20.04-cloudimg-template"
+    avisdkVersion = "21.1.1"
+    username = "ubuntu"
     netplan_file_path = "/etc/netplan/50-cloud-init.yaml"
     ip_mgmt = "10.206.112.58/22"
     gw = "10.206.112.1"
