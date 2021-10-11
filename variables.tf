@@ -65,7 +65,9 @@ variable "jump" {
     avisdkVersion = "21.1.1"
     username = "ubuntu"
     netplan_file_path = "/etc/netplan/50-cloud-init.yaml"
+    ip_mgmt = "10.206.112.58/24"
     ip_vip = "100.64.133.251"
+    dns_servers = "10.206.8.130, 10.206.8.131"
   }
 }
 

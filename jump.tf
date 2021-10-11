@@ -9,6 +9,9 @@ data "template_file" "jumpbox_userdata" {
     vsphere_server = var.vsphere_server
     username = var.jump["username"]
     privateKey = var.jump["private_key_path"]
+    dns_servers = var.jump.dns_servers
+    ip_mgmt = var.jump.ip_mgmt
+    netplan_file_path = var.jump.netplan_file_path
   }
 }
 
@@ -121,7 +124,11 @@ resource "null_resource" "update_ip_to_jump" {
       "echo \"network:\" | sudo tee ${var.jump.netplan_file_path}",
       "echo \"    ethernets:\" | sudo tee -a ${var.jump.netplan_file_path}",
       "echo \"        $ifaceFirstName:\" | sudo tee -a ${var.jump.netplan_file_path}",
-      "echo \"            dhcp4: true\" | sudo tee -a ${var.jump.netplan_file_path}",
+      "echo \"            dhcp4: false\" | sudo tee -a ${var.jump.netplan_file_path}",
+      "echo \"            addresses: [${ip_mgmt}]\" | sudo tee -a ${var.jump.netplan_file_path}",
+      "echo \"            match:\" | sudo tee -a ${var.jump.netplan_file_path}",
+      "echo \"                macaddress: $macFirst\" | sudo tee -a ${var.jump.netplan_file_path}",
+      "echo \"            set-name: $ifaceFirstName\" | sudo tee -a ${var.jump.netplan_file_path}",
       "echo \"        $ifaceLastName:\" | sudo tee -a ${var.jump.netplan_file_path}",
       "echo \"            dhcp4: false\" | sudo tee -a ${var.jump.netplan_file_path}",
       "echo \"            addresses: [${var.jump.ip_vip}/${split("/", var.vmw.network_vip.cidr)[1]}]\" | sudo tee -a ${var.jump.netplan_file_path}",
