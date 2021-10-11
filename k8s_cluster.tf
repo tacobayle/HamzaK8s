@@ -32,10 +32,17 @@ data "template_file" "secure_ingress" {
   }
 }
 
-data "template_file" "avi_crd_hostrule" {
-  template = file("template/avi_crd_hostrule.yml.template")
+data "template_file" "avi_crd_hostrule_waf" {
+  template = file("template/avi_crd_hostrule_waf.yml.template")
   vars = {
     default_waf_policy = var.vmw.default_waf_policy
+    domain = var.vmw.domains[0].name
+  }
+}
+
+data "template_file" "avi_crd_hostrule_tls_cert" {
+  template = file("template/avi_crd_hostrule_tls_cert.yml.template")
+  vars = {
     domain = var.vmw.domains[0].name
   }
 }
@@ -93,12 +100,21 @@ resource "null_resource" "ako_prerequisites" {
   }
 
   provisioner "local-exec" {
-    command = "cat > avi_crd_hostrule.yml <<EOL\n${data.template_file.avi_crd_hostrule.rendered}\nEOL"
+    command = "cat > avi_crd_hostrule_waf.yml <<EOL\n${data.template_file.avi_crd_hostrule_waf.rendered}\nEOL"
+  }
+
+  provisioner "local-exec" {
+    command = "cat > avi_crd_hostrule_tls_cert.yml <<EOL\n${data.template_file.avi_crd_hostrule_tls_cert.rendered}\nEOL"
   }
 
   provisioner "file" {
-    source = "avi_crd_hostrule.yml"
-    destination = "avi_crd_hostrule.yml"
+    source = "avi_crd_hostrule_waf.yml"
+    destination = "avi_crd_hostrule_waf.yml"
+  }
+
+  provisioner "file" {
+    source = "avi_crd_hostrule_tls_cert.yml"
+    destination = "avi_crd_hostrule_tls_cert.yml"
   }
 
   provisioner "remote-exec" {
