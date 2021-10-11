@@ -127,7 +127,7 @@ resource "null_resource" "update_ip_to_jump" {
       "echo \"        $ifaceFirstName:\" | sudo tee -a ${var.jump.netplan_file_path}",
       "echo \"            dhcp4: false\" | sudo tee -a ${var.jump.netplan_file_path}",
       "echo \"            addresses: [${var.jump.ip_mgmt}]\" | sudo tee -a ${var.jump.netplan_file_path}",
-      "echo \"            gateway4: ${var.jump.gw}\" | sudo tee -a ${netplan_file_path}",
+      "echo \"            gateway4: ${var.jump.gw}\" | sudo tee -a ${var.jump.netplan_file_path}",
       "echo \"            match:\" | sudo tee -a ${var.jump.netplan_file_path}",
       "echo \"                macaddress: $macFirst\" | sudo tee -a ${var.jump.netplan_file_path}",
       "echo \"            set-name: $ifaceFirstName\" | sudo tee -a ${var.jump.netplan_file_path}",
