@@ -19,6 +19,7 @@ write_files:
       echo "        $ifaceFirstName:" | sudo tee -a ${netplan_file_path}
       echo "            dhcp4: false" | sudo tee -a ${netplan_file_path}
       echo "            addresses: [${ip_mgmt}]" | sudo tee -a ${netplan_file_path}
+      echo "            gateway4: ${gw}" | sudo tee -a ${netplan_file_path}
       echo "            match:" | sudo tee -a ${netplan_file_path}
       echo "                macaddress: $macFirst" | sudo tee -a ${netplan_file_path}
       echo "            set-name: $ifaceFirstName" | sudo tee -a ${netplan_file_path}
