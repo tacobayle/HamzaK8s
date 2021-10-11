@@ -33,7 +33,7 @@ NetworkSettings:
     #   - peer2
   vipNetworkList: # Network Name of the VIP network, multiple networks allowed only for AWS Cloud.
     - networkName: ${networkName}
-      cidr: ${subnetIP}/{subnetPrefix}
+      cidr: ${subnetIP}/${subnetPrefix}
 
 
 
