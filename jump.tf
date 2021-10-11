@@ -89,7 +89,7 @@ resource "vsphere_virtual_machine" "jump" {
 
 
 resource "null_resource" "add_nic_to_jump" {
-  depends_on = [null_resource.ansible_avi]
+  depends_on = [null_resource.ansible_avi, null_resource.ansible_bootstrap_cluster]
 
   provisioner "local-exec" {
     command = <<-EOT

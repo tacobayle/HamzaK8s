@@ -9,7 +9,7 @@ output "workers" {
 }
 
 output "jump" {
-  value = vsphere_virtual_machine.jump.default_ip_address
+  value = split("/", var.jump.ip_mgmt)[0]
 }
 
 output "controllers" {

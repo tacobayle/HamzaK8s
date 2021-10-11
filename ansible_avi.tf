@@ -16,7 +16,7 @@ resource "null_resource" "ansible_hosts_avi_controllers" {
 resource "null_resource" "ansible_avi" {
   depends_on = [vsphere_virtual_machine.jump, vsphere_virtual_machine.master, vsphere_virtual_machine.worker, null_resource.ansible_hosts_avi_header_1, null_resource.ansible_bootstrap_cluster]
   connection {
-    host = vsphere_virtual_machine.jump.default_ip_address
+    host = split("/", var.jump.ip_mgmt)[0]
     type = "ssh"
     agent = false
     user = var.jump.username
