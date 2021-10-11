@@ -146,5 +146,3 @@ resource "vsphere_virtual_machine" "jump" {
 ////      "sudo ip addr add ${var.jump.ip_vip}/${split("/", var.vmw.network_vip.cidr)[1]} dev $ifaceLastName"
 ////    ]
 ////  }
-
-}
