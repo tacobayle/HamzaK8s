@@ -61,7 +61,7 @@ resource "vsphere_virtual_machine" "jump" {
  }
 
   connection {
-   host        = self.default_ip_address
+   host        = split("/", var.jump.ip_mgmt)[0]
    type        = "ssh"
    agent       = false
    user        = var.jump.username
@@ -107,7 +107,7 @@ resource "null_resource" "update_ip_to_jump" {
   depends_on = [null_resource.add_nic_to_jump]
 
   connection {
-    host        = vsphere_virtual_machine.jump.default_ip_address
+    host        = split("/", var.jump.ip_mgmt)[0]
     type        = "ssh"
     agent       = false
     user        = var.jump.username
